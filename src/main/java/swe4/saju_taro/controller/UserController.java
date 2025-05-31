@@ -18,7 +18,7 @@ public class UserController {
         // UserRequest DB 저장후 userid 반환
     }
 
-    @PostMapping("/delete")
+    @DeleteMapping("/delete/{userId}")
     public boolean deleteUser(@RequestParam Long user_id){
         //사주정보 초기화
         //DB에서 해당 userid 삭제
