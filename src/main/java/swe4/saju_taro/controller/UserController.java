@@ -1,5 +1,6 @@
 package swe4.saju_taro.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
 import swe4.saju_taro.dto.UserRequest;
@@ -19,8 +20,12 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{userId}")
-    public boolean deleteUser(@RequestParam Long user_id){
-        //사주정보 초기화
-        //DB에서 해당 userid 삭제
+    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
+        boolean deleted = userService.deleteUser(userId);   //userService 작성해야함
+        if (deleted) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
 }

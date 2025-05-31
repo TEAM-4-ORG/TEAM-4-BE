@@ -12,7 +12,7 @@ import swe4.saju_taro.dto.TarotRequest;
 public class TarotController {
 
     @PostMapping("/consult")
-    public Consultation consult(@RequestBody TarotRequest request){
+    public Consultation tarotConsult(@RequestBody TarotRequest request){
         //타로 카드 LLM에 넘겨서 해석결과 반환
     }
 }

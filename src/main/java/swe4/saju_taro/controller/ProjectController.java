@@ -1,5 +1,6 @@
 package swe4.saju_taro.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.Project;
 
@@ -12,13 +13,20 @@ public class ProjectController {
         // 해당 user_id에 새로운 project생성 project_id 반환
     }
 
-    @GetMapping("/change")
-    public Project changeProject(@RequestParam Long project_id){
+    @GetMapping("/load")
+    public Project loadProject(@RequestParam Long project_id){
         // 해당 project_id의 데이터 반환
     }
 
-    @PostMapping("/delete")
-    public boolean deleteProject(@RequestParam Long project_id){
-        //해당 project 삭제
+    @DeleteMapping("/projects/{projectId}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
+        boolean deleted = projectService.deleteProjectById(projectId);  //projectService 작성해야함
+
+        if (deleted) {
+            return ResponseEntity.noContent().build(); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
     }
+
 }
