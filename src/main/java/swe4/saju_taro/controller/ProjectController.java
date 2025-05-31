@@ -14,7 +14,7 @@ public class ProjectController {
     }
 
     @GetMapping("/load/{projectId}")
-    public Project loadProject(@RequestParam Long project_id){
+    public Project loadProject(@PathVariable Long project_id){
         // 해당 project_id의 데이터 반환
     }
 

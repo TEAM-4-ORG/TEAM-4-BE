@@ -10,7 +10,7 @@ import swe4.saju_taro.dto.UserRequest;
 public class UserController {
 
     @GetMapping("/info/{userId}")
-    public User getUserInfo(@RequestParam Long user_id){
+    public User getUserInfo(@PathVariable Long user_id){
         // DB에서 User 가져옴
     }
 
@@ -20,7 +20,7 @@ public class UserController {
     }
 
     @PutMapping("/change/{userId}")
-    public Long changeUserInfo(@RequestBody UserRequest request){
+    public Long changeUserInfo(@PathVariable Long userId, @RequestBody UserRequest request){
         // userid, UserRequest(사주 정보) 를 받아 DB 변경후 user_id 반환
     }
 
