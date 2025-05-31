@@ -3,6 +3,7 @@ package swe4.saju_taro.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
+import swe4.saju_taro.dto.ChangeUserInfoRequest;
 import swe4.saju_taro.dto.UserRequest;
 
 @RestController
@@ -17,6 +18,11 @@ public class UserController {
     @PostMapping("/new")
     public Long newUser(@RequestBody UserRequest request){
         // UserRequest DB 저장후 userid 반환
+    }
+
+    @PostMapping("/change")
+    public Long changeUserInfo(@RequestBody ChangeUserInfoRequest request){
+        // ChangeUserInfoRequest(user_id, 변경될 정보) 를 받아 DB 변경후 user_id 반환
     }
 
     @DeleteMapping("/delete/{userId}")
