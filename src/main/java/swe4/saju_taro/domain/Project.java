@@ -15,5 +15,5 @@ public class Project {
     private Long user_id;
     private String title;
     private String created_at;
-    private List<Consultation> consultations = new ArrayList<>();
+    //private List<Consultation> consultations = new ArrayList<>();
 }

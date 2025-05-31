@@ -2,7 +2,9 @@ package swe4.saju_taro.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import swe4.saju_taro.domain.Consultation;
 import swe4.saju_taro.domain.Project;
+import swe4.saju_taro.dto.ProjectTitle;
 
 import java.util.List;
 
@@ -18,6 +20,11 @@ public class ProjectController {
     @GetMapping("/load/{projectId}")
     public Project loadProject(@PathVariable Long project_id){
         // 해당 project_id의 데이터 반환
+    }
+
+    @GetMapping("/list/{projectId}/consultations")
+    public List<Consultation> listConsultations(@PathVariable Long projectId){
+        // 해당 project의 Consultation 반환
     }
 
     @DeleteMapping("/delete/{projectId}")

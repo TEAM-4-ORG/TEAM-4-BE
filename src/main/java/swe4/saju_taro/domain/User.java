@@ -21,5 +21,5 @@ public class User {
     private String oheng;
     private String sibsin;
 
-    private List<Project> projects = new ArrayList<>();
+    //private List<Project> projects = new ArrayList<>();
 }
