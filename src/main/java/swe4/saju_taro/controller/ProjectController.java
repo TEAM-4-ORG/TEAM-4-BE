@@ -4,6 +4,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.Project;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/project")
 public class ProjectController {
@@ -18,7 +20,7 @@ public class ProjectController {
         // 해당 project_id의 데이터 반환
     }
 
-    @DeleteMapping("/projects/{projectId}")
+    @DeleteMapping("/delete/{projectId}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
         boolean deleted = projectService.deleteProjectById(projectId);  //projectService 작성해야함
 
