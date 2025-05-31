@@ -9,7 +9,7 @@ import swe4.saju_taro.dto.UserRequest;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @GetMapping("/info")
+    @GetMapping("/info/{userId}")
     public User getUserInfo(@RequestParam Long user_id){
         // DB에서 User 가져옴
     }

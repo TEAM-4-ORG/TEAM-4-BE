@@ -13,7 +13,7 @@ public class ProjectController {
         // 해당 user_id에 새로운 project생성 project_id 반환
     }
 
-    @GetMapping("/load")
+    @GetMapping("/load/{projectId}")
     public Project loadProject(@RequestParam Long project_id){
         // 해당 project_id의 데이터 반환
     }
