@@ -3,7 +3,7 @@ package swe4.saju_taro.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaroRequest {
+public class TarotRequest {
     private Long user_id;
     private Long project_id;
 
