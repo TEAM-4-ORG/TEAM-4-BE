@@ -2,7 +2,6 @@ package swe4.saju_taro.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import swe4.saju_taro.domain.Project;
 import swe4.saju_taro.domain.User;
 import swe4.saju_taro.dto.ProjectTitle;
 import swe4.saju_taro.dto.UserRequest;
@@ -29,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/list/{userId}/projects")
-    public List<ProjectTitle> listProject(@PathVariable Long userId){
+    public List<ProjectTitle> listProjects(@PathVariable Long userId){
         // 해당 유저의 project들의 project_id와 title 반환
     }
 
