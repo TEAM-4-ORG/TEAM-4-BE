@@ -9,4 +9,5 @@ public interface UserRepository{
     // 자동 메서드
     Optional<User> findById(Long id);
 
+    User save(User user);
 }

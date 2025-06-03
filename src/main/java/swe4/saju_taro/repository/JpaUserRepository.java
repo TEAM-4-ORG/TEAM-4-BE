@@ -18,4 +18,10 @@ public class JpaUserRepository implements UserRepository{
         User user =  em.find(User.class, id);
         return Optional.ofNullable(user);
     }
+
+    @Override
+    public User save(User user) {
+        em.persist(user);
+        return user;
+    }
 }

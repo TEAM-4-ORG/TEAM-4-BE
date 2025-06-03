@@ -3,6 +3,7 @@ package swe4.saju_taro.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
+import swe4.saju_taro.dto.CommonResponse;
 import swe4.saju_taro.dto.ProjectTitle;
 import swe4.saju_taro.dto.UserRequest;
 import swe4.saju_taro.service.UserService;
@@ -21,16 +22,23 @@ public class UserController {
 
     @GetMapping("/info/{userId}")
     public ResponseEntity<User> getUserInfo(@PathVariable Long userId) {
-        return userService.getUserById(userId)
+        return userService.getUser(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-//    @PostMapping("/new")
-//    public Long newUser(@RequestBody UserRequest request){
-//        // UserRequest DB 저장후 userid 반환
-//    }
-//
+    @PostMapping("/new")
+    public ResponseEntity<CommonResponse> newUser(@RequestBody UserRequest request){
+        User user = new User();
+        user.setBirth(request.getBirth());
+        user.setTime(request.getTime());
+        user.setGender(request.isGender());
+
+        userService.createUser(user);
+
+        return ResponseEntity.ok(new CommonResponse(true, "COMMON200", "유저 추가에 성공했습니다."));
+    }
+
 //    @PutMapping("/change/{userId}")
 //    public Long changeUserInfo(@PathVariable Long userId, @RequestBody UserRequest request){
 //        // userid, UserRequest(사주 정보) 를 받아 DB 변경후 user_id 반환

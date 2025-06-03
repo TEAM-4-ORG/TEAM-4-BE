@@ -14,7 +14,12 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUserById(Long id) {
+    public Optional<User> getUser(Long id) {
         return userRepository.findById(id);
     }
+
+    public User createUser (User user){
+        return userRepository.save(user);
+    }
+
 }
