@@ -57,11 +57,6 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/list/{userId}/projects")
-//    public List<ProjectTitle> listProjects(@PathVariable Long userId){
-//        // 해당 유저의 project들의 project_id와 title 반환
-//    }
-
     @DeleteMapping("/delete/{userId}")
     public ResponseEntity<CommonResponse> deleteUser(@PathVariable("userId") Integer userId) {
         boolean deleted = userService.deleteUser(userId);   //userService 작성해야함
@@ -73,4 +68,8 @@ public class UserController {
                     .body(new CommonResponse(false, "COMMON404", "해당 유저를 찾을 수 없어 삭제에 실패했습니다."));
         }
     }
+//    @GetMapping("/list/{userId}/projects")
+//    public List<ProjectTitle> listProjects(@PathVariable Long userId){
+//        // 해당 유저의 project들의 project_id와 title 반환
+//    }
 }
