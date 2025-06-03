@@ -1,10 +1,12 @@
 package swe4.saju_taro.repository;
 
 import jakarta.persistence.EntityManager;
+import org.springframework.stereotype.Repository;
 import swe4.saju_taro.domain.User;
 
 import java.util.Optional;
 
+@Repository
 public class JpaUserRepository implements UserRepository{
 
     private  final EntityManager em;
@@ -14,7 +16,7 @@ public class JpaUserRepository implements UserRepository{
     }
 
     @Override
-    public Optional<User> findById(Long id) {
+    public Optional<User> findById(Integer id) {
         User user =  em.find(User.class, id);
         return Optional.ofNullable(user);
     }

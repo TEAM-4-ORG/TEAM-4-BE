@@ -4,11 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
 import swe4.saju_taro.dto.CommonResponse;
-import swe4.saju_taro.dto.ProjectTitle;
 import swe4.saju_taro.dto.UserRequest;
 import swe4.saju_taro.service.UserService;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
@@ -21,7 +19,7 @@ public class UserController {
     }
 
     @GetMapping("/info/{userId}")
-    public ResponseEntity<User> getUserInfo(@PathVariable Long userId) {
+    public ResponseEntity<User> getUserInfo(@PathVariable("userId") Integer userId) {
         return userService.getUser(userId)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

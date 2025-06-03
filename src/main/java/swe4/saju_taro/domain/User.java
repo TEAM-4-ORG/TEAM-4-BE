@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -61,4 +62,24 @@ public class User {
             throw new IllegalArgumentException("Invalid gender type: " + gender);
         }
     }
+    public Integer getUserId() {
+        return this.userId;
+    }
+
+    public LocalDate getBirthDate() {
+        return this.birthDate;
+    }
+
+    public LocalTime getBirthTime() {
+        return this.birthTime;
+    }
+
+    public Boolean getGender() {
+        return this.gender;
+    }
+
+    public List<Project> getProjects() {
+        return this.projects;
+    }
+
 }

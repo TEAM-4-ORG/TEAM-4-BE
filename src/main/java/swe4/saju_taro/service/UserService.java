@@ -1,5 +1,6 @@
 package swe4.saju_taro.service;
 
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import swe4.saju_taro.domain.User;
 import swe4.saju_taro.repository.UserRepository;
@@ -14,10 +15,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public Optional<User> getUser(Long id) {
+    public Optional<User> getUser(Integer id) {
         return userRepository.findById(id);
     }
 
+    @Transactional
     public User createUser (User user){
         return userRepository.save(user);
     }
