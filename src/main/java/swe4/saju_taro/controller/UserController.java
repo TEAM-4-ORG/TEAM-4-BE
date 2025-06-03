@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
 import swe4.saju_taro.dto.ProjectTitle;
 import swe4.saju_taro.dto.UserRequest;
+import swe4.saju_taro.service.UserService;
 
 import java.util.List;
 
@@ -12,11 +13,19 @@ import java.util.List;
 @RequestMapping("/api/user")
 public class UserController {
 
-//    @GetMapping("/info/{userId}")
-//    public User getUserInfo(@PathVariable Long user_id){
-//        // DB에서 User 가져옴
-//    }
-//
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/info/{userId}")
+    public ResponseEntity<User> getUserInfo(@PathVariable Long userId) {
+        return userService.getUserById(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
 //    @PostMapping("/new")
 //    public Long newUser(@RequestBody UserRequest request){
 //        // UserRequest DB 저장후 userid 반환
