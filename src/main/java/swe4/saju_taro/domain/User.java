@@ -1,25 +1,34 @@
 package swe4.saju_taro.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
+@Getter
+@NoArgsConstructor
 public class User {
+
     @Id
-    private Long user_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Integer userId;
 
-    private String birth;
-    private String time;
-    private boolean gender;
+    @Column(name = "birth_date", nullable = false)
+    private LocalDate birthDate;
 
-    private String ilgan;
-    private String ilju;
-    private String ilji;
-    private String oheng;
-    private String sibsin;
+    @Column(name = "birth_time")
+    private LocalTime birthTime;
 
-    //private List<Project> projects = new ArrayList<>();
+    @Column(nullable = false)
+    private Boolean gender;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Project> projects = new ArrayList<>();
 }

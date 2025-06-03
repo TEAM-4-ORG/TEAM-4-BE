@@ -1,0 +1,29 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+/shelf/
+/httpRequests/
+workspace.xml
+/dataSources/
+/dataSources.local.xml
+
+# Java class files
+*.class
+
+# Log / temp / cache
+*.log
+*.tmp
+*.out
+
+# Build output
+/build/
+/bin/
+/out/
+/*.bin
+
+# Gradle
+.gradle/
+build/
+
+# HTML (optional: remove if needed)
+*.html
