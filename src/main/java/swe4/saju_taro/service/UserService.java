@@ -3,6 +3,7 @@ package swe4.saju_taro.service;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import swe4.saju_taro.domain.User;
+import swe4.saju_taro.dto.UserRequest;
 import swe4.saju_taro.repository.UserRepository;
 
 import java.util.Optional;
@@ -32,5 +33,19 @@ public class UserService {
     @Transactional
     public boolean deleteUser(Integer userId) {
         return userRepository.deleteById(userId);
+    }
+
+    @Transactional
+    public boolean updateUser(Integer userId, UserRequest request) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) return false;
+
+        User user = optionalUser.get();
+        user.setBirth(request.getBirth());
+        user.setTime(request.getTime());
+        user.setGender(request.isGender());
+
+        userRepository.save(user);
+        return true;
     }
 }

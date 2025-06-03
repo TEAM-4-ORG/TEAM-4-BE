@@ -44,11 +44,19 @@ public class UserController {
         }
     }
 
-//    @PutMapping("/change/{userId}")
-//    public Long changeUserInfo(@PathVariable Long userId, @RequestBody UserRequest request){
-//        // userid, UserRequest(사주 정보) 를 받아 DB 변경후 user_id 반환
-//    }
-//
+    @PutMapping("/change/{userId}")
+    public ResponseEntity<CommonResponse> changeUserInfo(@PathVariable("userId") Integer userId, @RequestBody UserRequest request){
+        boolean updated = userService.updateUser(userId, request);
+
+        if (updated) {
+            return ResponseEntity.ok(
+                    new CommonResponse(true, "COMMON200", "유저 정보 수정에 성공했습니다."));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CommonResponse(false, "USER404", "해당 유저를 찾을 수 없습니다."));
+        }
+    }
+
 //    @GetMapping("/list/{userId}/projects")
 //    public List<ProjectTitle> listProjects(@PathVariable Long userId){
 //        // 해당 유저의 project들의 project_id와 title 반환
