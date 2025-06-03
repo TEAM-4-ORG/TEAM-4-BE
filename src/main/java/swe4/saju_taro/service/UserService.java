@@ -20,8 +20,17 @@ public class UserService {
     }
 
     @Transactional
-    public User createUser (User user){
-        return userRepository.save(user);
+    public boolean createUser (User user){
+        try {
+            userRepository.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
+    @Transactional
+    public boolean deleteUser(Integer userId) {
+        return userRepository.deleteById(userId);
+    }
 }

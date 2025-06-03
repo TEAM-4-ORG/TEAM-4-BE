@@ -26,4 +26,15 @@ public class JpaUserRepository implements UserRepository{
         em.persist(user);
         return user;
     }
+
+    @Override
+    public boolean deleteById(Integer id){
+        User user = em.find(User.class, id);
+        if (user != null) {
+            em.remove(user);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package swe4.saju_taro.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
@@ -32,9 +33,15 @@ public class UserController {
         user.setTime(request.getTime());
         user.setGender(request.isGender());
 
-        userService.createUser(user);
+        boolean created = userService.createUser(user);
 
-        return ResponseEntity.ok(new CommonResponse(true, "COMMON200", "유저 추가에 성공했습니다."));
+        if (created) {
+            return ResponseEntity.ok(new CommonResponse(true, "COMMON200", "유저 추가에 성공했습니다."));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new CommonResponse(false, "USER500", "유저 추가에 실패했습니다."));
+        }
     }
 
 //    @PutMapping("/change/{userId}")
@@ -46,14 +53,16 @@ public class UserController {
 //    public List<ProjectTitle> listProjects(@PathVariable Long userId){
 //        // 해당 유저의 project들의 project_id와 title 반환
 //    }
-//
-//    @DeleteMapping("/delete/{userId}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
-//        boolean deleted = userService.deleteUser(userId);   //userService 작성해야함
-//        if (deleted) {
-//            return ResponseEntity.noContent().build(); // 204 No Content
-//        } else {
-//            return ResponseEntity.notFound().build(); // 404 Not Found
-//        }
-//    }
+
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<CommonResponse> deleteUser(@PathVariable("userId") Integer userId) {
+        boolean deleted = userService.deleteUser(userId);   //userService 작성해야함
+        if (deleted) {
+            return ResponseEntity.ok(new CommonResponse(true, "COMMON200", "유저 삭제에 성공했습니다."));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new CommonResponse(false, "COMMON404", "해당 유저를 찾을 수 없어 삭제에 실패했습니다."));
+        }
+    }
 }
