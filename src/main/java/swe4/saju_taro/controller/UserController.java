@@ -1,44 +1,80 @@
 package swe4.saju_taro.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
-import swe4.saju_taro.dto.ProjectTitle;
+import swe4.saju_taro.dto.CommonResponse;
 import swe4.saju_taro.dto.UserRequest;
+import swe4.saju_taro.service.UserService;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-//    @GetMapping("/info/{userId}")
-//    public User getUserInfo(@PathVariable Long user_id){
-//        // DB에서 User 가져옴
-//    }
-//
-//    @PostMapping("/new")
-//    public Long newUser(@RequestBody UserRequest request){
-//        // UserRequest DB 저장후 userid 반환
-//    }
-//
-//    @PutMapping("/change/{userId}")
-//    public Long changeUserInfo(@PathVariable Long userId, @RequestBody UserRequest request){
-//        // userid, UserRequest(사주 정보) 를 받아 DB 변경후 user_id 반환
-//    }
-//
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/info/{userId}")
+    public ResponseEntity<User> getUserInfo(@PathVariable("userId") Integer userId) {
+        return userService.getUser(userId)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PostMapping("/new")
+    public ResponseEntity<CommonResponse<Map<String, Object>>> newUser(@RequestBody UserRequest request){
+        User user = new User();
+        user.setBirth(request.getBirth());
+        user.setTime(request.getTime());
+        user.setGender(request.isGender());
+
+        boolean created = userService.createUser(user);
+
+        if (created) {
+            Map<String, Object> result = new HashMap<>();
+            result.put("user_id", user.getUserId());
+
+            return ResponseEntity.ok(new CommonResponse<>(true, "COMMON200", "유저 추가에 성공했습니다.", result));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new CommonResponse<>(false, "USER500", "유저 추가에 실패했습니다."));
+        }
+    }
+
+    @PutMapping("/change/{userId}")
+    public ResponseEntity<CommonResponse<Void>> changeUserInfo(@PathVariable("userId") Integer userId, @RequestBody UserRequest request){
+        boolean updated = userService.updateUser(userId, request);
+
+        if (updated) {
+            return ResponseEntity.ok(
+                    new CommonResponse<>(true, "COMMON200", "유저 정보 수정에 성공했습니다."));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(new CommonResponse<>(false, "USER404", "해당 유저를 찾을 수 없습니다."));
+        }
+    }
+
+    @DeleteMapping("/delete/{userId}")
+    public ResponseEntity<CommonResponse<Void>> deleteUser(@PathVariable("userId") Integer userId) {
+        boolean deleted = userService.deleteUser(userId);   //userService 작성해야함
+        if (deleted) {
+            return ResponseEntity.ok(new CommonResponse<>(true, "COMMON200", "유저 삭제에 성공했습니다."));
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(new CommonResponse<>(false, "COMMON404", "해당 유저를 찾을 수 없어 삭제에 실패했습니다."));
+        }
+    }
 //    @GetMapping("/list/{userId}/projects")
 //    public List<ProjectTitle> listProjects(@PathVariable Long userId){
 //        // 해당 유저의 project들의 project_id와 title 반환
-//    }
-//
-//    @DeleteMapping("/delete/{userId}")
-//    public ResponseEntity<Void> deleteUser(@PathVariable Long userId) {
-//        boolean deleted = userService.deleteUser(userId);   //userService 작성해야함
-//        if (deleted) {
-//            return ResponseEntity.noContent().build(); // 204 No Content
-//        } else {
-//            return ResponseEntity.notFound().build(); // 404 Not Found
-//        }
 //    }
 }

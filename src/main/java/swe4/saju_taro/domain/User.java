@@ -1,34 +1,77 @@
 package swe4.saju_taro.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
 @Getter
 @NoArgsConstructor
+
+@JsonPropertyOrder({ "user_id", "birth", "time", "gender", "projects" })
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @JsonProperty("user_id")
     private Integer userId;
 
     @Column(name = "birth_date", nullable = false)
+    @JsonProperty("birth")
     private LocalDate birthDate;
 
     @Column(name = "birth_time")
+    @JsonProperty("time")
     private LocalTime birthTime;
 
     @Column(nullable = false)
+    @JsonProperty("gender")
     private Boolean gender;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonProperty("projects")
     private List<Project> projects = new ArrayList<>();
+
+    public void setBirth(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public void setTime(LocalTime birthTime) {
+        this.birthTime = birthTime;
+    }
+
+    public void setGender(boolean gender) {
+        this.gender = gender;
+    }
+    public Integer getUserId() {
+        return this.userId;
+    }
+
+    public LocalDate getBirthDate() {
+        return this.birthDate;
+    }
+
+    public LocalTime getBirthTime() {
+        return this.birthTime;
+    }
+
+    public Boolean getGender() {
+        return this.gender;
+    }
+
+    public List<Project> getProjects() {
+        return this.projects;
+    }
+
 }

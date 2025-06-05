@@ -43,4 +43,16 @@ public class Project {
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Consultation> consultations = new ArrayList<>();
+
+    public Integer getProjectId() {
+        return this.projectId;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public Type getType() {
+        return this.type;
+    }
 }
