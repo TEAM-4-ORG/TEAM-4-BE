@@ -51,14 +51,8 @@ public class User {
         this.birthTime = birthTime;
     }
 
-    public void setGender(Object gender) {
-        if (gender instanceof Boolean) {
-            this.gender = (Boolean) gender;
-        } else if (gender instanceof String) {
-            this.gender = Boolean.parseBoolean((String) gender);
-        } else {
-            throw new IllegalArgumentException("Invalid gender type: " + gender);
-        }
+    public void setGender(boolean gender) {
+        this.gender = gender;
     }
     public Integer getUserId() {
         return this.userId;
