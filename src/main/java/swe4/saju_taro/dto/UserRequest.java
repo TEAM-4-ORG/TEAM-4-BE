@@ -1,25 +1,28 @@
 package swe4.saju_taro.dto;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class UserRequest {
 
-    private String birth;
-    private String time;
+    private LocalDate birth;
+    private LocalTime time;
     private boolean gender;
 
     public UserRequest() {
     }
 
-    public UserRequest(String birth, String time, boolean gender) {
+    public UserRequest(LocalDate birth, LocalTime time, boolean gender) {
         this.birth = birth;
         this.time = time;
         this.gender = gender;
     }
 
-    public String getBirth() {
+    public LocalDate getBirth() {
         return birth;
     }
 
-    public String getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -27,11 +30,11 @@ public class UserRequest {
         return gender;
     }
 
-    public void setBirth(String birth) {
+    public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 

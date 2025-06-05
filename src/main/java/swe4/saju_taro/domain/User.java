@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -42,24 +43,12 @@ public class User {
     @JsonProperty("projects")
     private List<Project> projects = new ArrayList<>();
 
-    public void setBirth(Object birth) {
-        if (birth instanceof String) {
-            this.birthDate = LocalDate.parse((String) birth); // e.g. "2000-12-19"
-        } else if (birth instanceof LocalDate) {
-            this.birthDate = (LocalDate) birth;
-        } else {
-            throw new IllegalArgumentException("Invalid birth type: " + birth);
-        }
+    public void setBirth(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public void setTime(Object time) {
-        if (time instanceof String) {
-            this.birthTime = LocalTime.parse((String) time); // e.g. "11:45"
-        } else if (time instanceof LocalTime) {
-            this.birthTime = (LocalTime) time;
-        } else {
-            throw new IllegalArgumentException("Invalid time type: " + time);
-        }
+    public void setTime(LocalTime birthTime) {
+        this.birthTime = birthTime;
     }
 
     public void setGender(Object gender) {
