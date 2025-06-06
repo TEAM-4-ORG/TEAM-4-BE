@@ -1,6 +1,8 @@
 package swe4.saju_taro.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -12,6 +14,8 @@ import java.time.LocalDateTime;
 @Table(name = "consultation")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Consultation {
 

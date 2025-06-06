@@ -1,6 +1,8 @@
 package swe4.saju_taro.domain;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,11 +17,14 @@ import java.util.List;
 @Table(name = "project")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @EntityListeners(AuditingEntityListener.class)
 public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     @Column(name = "project_id")
     private Integer projectId;
 
@@ -27,9 +32,11 @@ public class Project {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Getter
     @Column(length = 50, nullable = false)
     private String title; // 요약 제목
 
+    @Getter
     @Column(nullable = false)
     private Type type;
 
@@ -44,15 +51,4 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Consultation> consultations = new ArrayList<>();
 
-    public Integer getProjectId() {
-        return this.projectId;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public Type getType() {
-        return this.type;
-    }
 }

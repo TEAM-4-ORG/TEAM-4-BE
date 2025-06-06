@@ -1,21 +1,23 @@
 package swe4.saju_taro.controller;
 
-import org.springframework.http.ResponseEntity;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import swe4.saju_taro.domain.Consultation;
-import swe4.saju_taro.domain.Project;
-import swe4.saju_taro.dto.ProjectTitle;
-
-import java.util.List;
+import swe4.saju_taro.common.ApiResponse;
+import swe4.saju_taro.common.status.SuccessStatus;
+import swe4.saju_taro.dto.ProjectRequestDTO;
+import swe4.saju_taro.service.ProjectService;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/project")
 public class ProjectController {
 
-//    @PostMapping("/new")
-//    public Long newProject(@RequestParam Long user_id){
-//        // 해당 user_id에 새로운 project생성 project_id 반환
-//    }
+    private final ProjectService projectService;
+
+    @PostMapping("/new")
+    public ApiResponse<?> newProject(@RequestBody ProjectRequestDTO.ProjectDTO projectDTO){
+        return ApiResponse.onSuccess(SuccessStatus.PROJECT_CREATED, projectService.createNewProject(projectDTO));
+    }
 //
 //    @GetMapping("/load/{projectId}")
 //    public Project loadProject(@PathVariable Long project_id){

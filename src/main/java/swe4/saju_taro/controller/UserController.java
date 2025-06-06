@@ -1,10 +1,11 @@
 package swe4.saju_taro.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.domain.User;
-import swe4.saju_taro.dto.CommonResponse;
+import swe4.saju_taro.common.CommonResponse;
 import swe4.saju_taro.dto.UserRequest;
 import swe4.saju_taro.service.UserService;
 
@@ -13,14 +14,11 @@ import java.util.Map;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/info/{userId}")
     public ResponseEntity<User> getUserInfo(@PathVariable("userId") Integer userId) {
