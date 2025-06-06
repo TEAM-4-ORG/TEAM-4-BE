@@ -17,5 +17,6 @@ public class ProjectRequestDTO {
         private Type type;
         @JsonProperty("first_question")
         private String firstQuestion;
+
     }
 }

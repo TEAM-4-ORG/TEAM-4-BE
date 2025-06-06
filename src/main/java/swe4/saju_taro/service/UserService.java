@@ -3,47 +3,55 @@ package swe4.saju_taro.service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import swe4.saju_taro.common.GeneralException;
+import swe4.saju_taro.common.status.ErrorStatus;
 import swe4.saju_taro.domain.User;
-import swe4.saju_taro.dto.UserRequest;
+import swe4.saju_taro.dto.UserRequestDTO;
+import swe4.saju_taro.dto.UserResponseDTO;
 import swe4.saju_taro.repository.UserRepository;
 
-import java.util.Optional;
-
-@Service
 @RequiredArgsConstructor
+@Transactional
+@Service
 public class UserService {
+
     private final UserRepository userRepository;
 
-    public Optional<User> getUser(Integer id) {
-        return userRepository.findById(id);
-    }
+    public UserResponseDTO.UserDTO createUser (UserRequestDTO.UserDTO userDTO){
 
-    @Transactional
-    public boolean createUser (User user){
-        try {
-            userRepository.save(user);
-            return true;
-        } catch (Exception e) {
-            return false;
+        if (userDTO.getBirth() == null || userDTO.getTime() == null){
+            throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
         }
+
+        User user = User.builder()
+                .birthDate(userDTO.getParsedBirth())
+                .birthTime(userDTO.getParsedTime())
+                .gender(userDTO.isGender())
+                .build();
+        userRepository.save(user);
+
+        return new UserResponseDTO.UserDTO(user.getUserId());
     }
 
-    @Transactional
-    public boolean deleteUser(Integer userId) {
-        return userRepository.deleteById(userId);
+    public User getUser(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
     }
 
-    @Transactional
-    public boolean updateUser(Integer userId, UserRequest request) {
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isEmpty()) return false;
+    public void deleteUser(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
+        userRepository.deleteById(userId);
+    }
 
-        User user = optionalUser.get();
-        user.setBirth(request.getBirth());
-        user.setTime(request.getTime());
-        user.setGender(request.isGender());
+    public void updateUser(Integer userId, UserRequestDTO.UserDTO userDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
+
+        user.setBirthDate(userDTO.getParsedBirth());
+        user.setBirthTime(userDTO.getParsedTime());
+        user.setGender(userDTO.isGender());
 
         userRepository.save(user);
-        return true;
     }
 }

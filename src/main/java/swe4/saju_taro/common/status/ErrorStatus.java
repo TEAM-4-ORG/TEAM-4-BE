@@ -20,6 +20,8 @@ ErrorStatus implements BaseErrorCode {
 
     // 사용자 관련 응답
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER404", "사용자를 찾을 수 없습니다."),
+    USER_WRONG_BIRTH(HttpStatus.BAD_REQUEST, "USER400", "유효하지 않은 생년월일 형식입니다."),
+    USER_WRONG_TIME(HttpStatus.BAD_REQUEST, "USER400", "유효하지 않은 시간 형식입니다."),
 
     // 프로젝트 관련 응답
     PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "PROJECT404", "해당 프로젝트를 찾을 수 없습니다."),
