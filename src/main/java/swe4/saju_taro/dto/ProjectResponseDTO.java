@@ -10,6 +10,7 @@ public class ProjectResponseDTO {
     @Getter
     @AllArgsConstructor
     public static class ProjectCreateDTO {
+        private Integer projectId;
         private String title;
     }
 
