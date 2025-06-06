@@ -1,18 +1,24 @@
 package swe4.saju_taro.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import swe4.saju_taro.domain.Consultation;
-import swe4.saju_taro.dto.TarotRequest;
+import swe4.saju_taro.common.ApiResponse;
+import swe4.saju_taro.common.status.SuccessStatus;
+import swe4.saju_taro.dto.TarotRequestDTO;
+import swe4.saju_taro.service.TarotService;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/tarot")
 public class TarotController {
 
-//    @PostMapping("/consult")
-//    public Consultation tarotConsult(@RequestBody TarotRequest request){
-//        //타로 카드 LLM에 넘겨서 해석결과 반환
-//    }
+    private final TarotService tarotService;
+
+    @PostMapping("/consult")
+    public ApiResponse<?> sajuConsult(@RequestBody TarotRequestDTO request) {
+        return ApiResponse.onSuccess(SuccessStatus._OK, tarotService.tarotConsult(request));
+    }
 }

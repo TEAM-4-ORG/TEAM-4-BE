@@ -1,24 +1,23 @@
 package swe4.saju_taro.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import swe4.saju_taro.domain.Consultation;
-import swe4.saju_taro.domain.User;
-import swe4.saju_taro.dto.SajuRequest;
+import swe4.saju_taro.common.ApiResponse;
+import swe4.saju_taro.common.status.SuccessStatus;
+import swe4.saju_taro.dto.SajuRequestDTO;
+import swe4.saju_taro.service.SajuService;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/saju")
 public class SajuController {
 
-//    @GetMapping("/info")
-//    public User getSajuInfo(@RequestParam Long user_id) {
-//        // userId로 DB에서 해당 유저의 사주정보를 가져온다
-//    }
+    private final SajuService sajuService;
 
-//    @PostMapping("/consult")
-//    public Consultation sajuConsult(@RequestBody SajuRequest request) {
-//        // SajuRequest(userid, projectid, 사주정보, question) LLM에 넘겨서 결과 반환
-//        // 상담기록 DB에 저장
-//    }
+    @PostMapping("/consult")
+    public ApiResponse<?> sajuConsult(@RequestBody SajuRequestDTO request) {
+        return ApiResponse.onSuccess(SuccessStatus._OK, sajuService.sajuConsult(request));
+    }
 
 }

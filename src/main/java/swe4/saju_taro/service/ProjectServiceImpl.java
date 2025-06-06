@@ -57,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .build();
         consultationRepository.save(consultation);
 
-        return new ProjectResponseDTO.ProjectCreateDTO(aiTitle);
+        return new ProjectResponseDTO.ProjectCreateDTO(project.getProjectId(), aiTitle);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
         User user = project.getUser();
 
         List<ConsultationResponseDTO> consultations = project.getConsultations().stream()
-                .sorted(Comparator.comparing(Consultation::getCreatedAt).reversed())
+                .sorted(Comparator.comparing(Consultation::getCreatedAt))
                 .map(ConsultationResponseDTO::from)
                 .toList();
 
@@ -108,14 +108,14 @@ public class ProjectServiceImpl implements ProjectService {
                     Map.class
             );
 
-            Map<String, Object> body = response.getBody();
+            Map<?, ?> body = response.getBody();
             if (body != null && Boolean.TRUE.equals(body.get("isSuccess"))) {
                 Map<String, Object> result = (Map<String, Object>) body.get("result");
                 Object title = result.get("title");
                 return title != null ? title.toString() : defaultTitle;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new GeneralException(ErrorStatus.AI_RESPONSE_FAILED);
         }
         return defaultTitle;
     }
