@@ -33,6 +33,11 @@ public class SajuService {
 
     public SajuResponseDTO sajuConsult(SajuRequestDTO requestDTO) {
 
+        if (requestDTO.getUserId() == null || requestDTO.getProjectId() == null ||
+                requestDTO.getQuestion() == null || requestDTO.getQuestion().trim().isEmpty() ||
+                requestDTO.getSajuData() == null) {
+            throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
+        }
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);

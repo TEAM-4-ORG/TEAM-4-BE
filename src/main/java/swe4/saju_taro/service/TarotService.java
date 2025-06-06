@@ -32,6 +32,12 @@ public class TarotService {
 
     public TarotResponseDTO tarotConsult(TarotRequestDTO requestDTO) {
 
+        if (requestDTO.getUserId() == null || requestDTO.getProjectId() == null ||
+                requestDTO.getQuestion() == null || requestDTO.getQuestion().trim().isEmpty() ||
+                requestDTO.getCards() == null) {
+            throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
+        }
+
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
