@@ -24,21 +24,11 @@ public class ProjectController {
         return ApiResponse.onSuccess(SuccessStatus._OK, projectService.loadProject(projectId));
 
     }
-//
-//    @GetMapping("/list/{projectId}/consultations")
-//    public List<Consultation> listConsultations(@PathVariable Long projectId){
-//        // 해당 project의 Consultation 반환
-//    }
-//
-//    @DeleteMapping("/delete/{projectId}")
-//    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
-//        boolean deleted = projectService.deleteProjectById(projectId);  //projectService 작성해야함
-//
-//        if (deleted) {
-//            return ResponseEntity.noContent().build(); // 204 No Content
-//        } else {
-//            return ResponseEntity.notFound().build(); // 404 Not Found
-//        }
-//    }
+
+    @DeleteMapping("/delete/{projectId}")
+    public ApiResponse<?> deleteProject(@PathVariable Integer projectId) {
+        projectService.deleteProject(projectId);
+        return ApiResponse.onSuccess(SuccessStatus.PROJECT_DELETED, null);
+    }
 
 }

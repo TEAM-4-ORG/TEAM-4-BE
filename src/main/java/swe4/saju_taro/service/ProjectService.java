@@ -6,4 +6,5 @@ import swe4.saju_taro.dto.ProjectResponseDTO;
 public interface ProjectService {
     ProjectResponseDTO.ProjectCreateDTO createNewProject(ProjectRequestDTO.ProjectDTO projectDTO);
     ProjectResponseDTO.ProjectLoadDTO loadProject(Integer projectId);
+    void deleteProject(Integer projectId);
 }

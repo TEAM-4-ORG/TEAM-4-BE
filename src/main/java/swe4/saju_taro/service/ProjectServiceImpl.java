@@ -81,6 +81,14 @@ public class ProjectServiceImpl implements ProjectService {
         );
     }
 
+    @Override
+    public void deleteProject(Integer projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.PROJECT_NOT_FOUND));
+
+        projectRepository.delete(project);
+    }
+
     private String getTitleFromAI(String question) {
         final String defaultTitle = "새 프로젝트";
         final String aiUrl = "http://localhost:5000/api/project/new";
