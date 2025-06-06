@@ -68,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
         User user = project.getUser();
 
         List<ConsultationResponseDTO> consultations = project.getConsultations().stream()
-                .sorted(Comparator.comparing(Consultation::getCreatedAt).reversed())
+                .sorted(Comparator.comparing(Consultation::getCreatedAt))
                 .map(ConsultationResponseDTO::from)
                 .toList();
 
