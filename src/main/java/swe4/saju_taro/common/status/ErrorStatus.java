@@ -19,7 +19,10 @@ ErrorStatus implements BaseErrorCode {
     MISSING_REQUIRED_VALUE(HttpStatus.BAD_REQUEST, "COMMON400", "입력되지 않은 필수값이 있습니다."),
 
     // 사용자 관련 응답
-    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER404", "사용자를 찾을 수 없습니다.");
+    USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER404", "사용자를 찾을 수 없습니다."),
+
+    // 프로젝트 관련 응답
+    PROJECT_NOT_FOUND(HttpStatus.NOT_FOUND, "PROJECT404", "해당 프로젝트를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

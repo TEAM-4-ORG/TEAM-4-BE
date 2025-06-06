@@ -10,12 +10,15 @@ import swe4.saju_taro.common.status.ErrorStatus;
 import swe4.saju_taro.domain.Consultation;
 import swe4.saju_taro.domain.Project;
 import swe4.saju_taro.domain.User;
+import swe4.saju_taro.dto.ConsultationResponseDTO;
 import swe4.saju_taro.dto.ProjectRequestDTO;
 import swe4.saju_taro.dto.ProjectResponseDTO;
 import swe4.saju_taro.repository.ConsultationRepository;
 import swe4.saju_taro.repository.ProjectRepository;
 import swe4.saju_taro.repository.UserRepository;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -55,6 +58,27 @@ public class ProjectServiceImpl implements ProjectService {
         consultationRepository.save(consultation);
 
         return new ProjectResponseDTO.ProjectCreateDTO(aiTitle);
+    }
+
+    @Override
+    public ProjectResponseDTO.ProjectLoadDTO loadProject(Integer projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.PROJECT_NOT_FOUND));
+
+        User user = project.getUser();
+
+        List<ConsultationResponseDTO> consultations = project.getConsultations().stream()
+                .sorted(Comparator.comparing(Consultation::getCreatedAt).reversed())
+                .map(ConsultationResponseDTO::from)
+                .toList();
+
+        return new ProjectResponseDTO.ProjectLoadDTO(
+                project.getProjectId(),
+                user.getUserId(),
+                project.getTitle(),
+                project.getType().name(),
+                consultations
+        );
     }
 
     private String getTitleFromAI(String question) {

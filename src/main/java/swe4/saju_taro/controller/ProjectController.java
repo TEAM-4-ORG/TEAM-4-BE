@@ -18,11 +18,12 @@ public class ProjectController {
     public ApiResponse<?> newProject(@RequestBody ProjectRequestDTO.ProjectDTO projectDTO){
         return ApiResponse.onSuccess(SuccessStatus.PROJECT_CREATED, projectService.createNewProject(projectDTO));
     }
-//
-//    @GetMapping("/load/{projectId}")
-//    public Project loadProject(@PathVariable Long project_id){
-//        // 해당 project_id의 데이터 반환
-//    }
+
+    @GetMapping("/load/{projectId}")
+    public ApiResponse<?> loadProject(@PathVariable Integer projectId){
+        return ApiResponse.onSuccess(SuccessStatus._OK, projectService.loadProject(projectId));
+
+    }
 //
 //    @GetMapping("/list/{projectId}/consultations")
 //    public List<Consultation> listConsultations(@PathVariable Long projectId){
