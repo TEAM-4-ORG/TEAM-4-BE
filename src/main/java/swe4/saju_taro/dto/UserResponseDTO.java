@@ -8,7 +8,7 @@ public class UserResponseDTO {
     @Getter
     @AllArgsConstructor
     public static class UserDTO{
-        private Integer userId;
+        private Integer user_id;
 
     }
 

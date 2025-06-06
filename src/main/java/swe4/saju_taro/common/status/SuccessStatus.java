@@ -15,6 +15,7 @@ public enum SuccessStatus implements BaseCode {
     // 유저 관련 응답
     USER_CREATED(HttpStatus.OK, "USER200", "유저 추가에 성공했습니다."),
     USER_CHANGEED(HttpStatus.OK, "USER200", "유저 정보 수정에 성공했습니다."),
+    USER_DELETED(HttpStatus.OK, "USER200", "유저 삭제에 성공했습니다."),
 
     // 프로젝트 관련 응답
     PROJECT_CREATED(HttpStatus.OK, "PROJECT200", "프로젝트 추가에 성공했습니다."),
