@@ -3,8 +3,7 @@ package swe4.saju_taro.domain;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
@@ -16,8 +15,10 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 @Getter
+@Setter
 @NoArgsConstructor
-
+@Builder
+@AllArgsConstructor
 @JsonPropertyOrder({ "user_id", "birth", "time", "gender", "projects" })
 public class User {
 
@@ -42,36 +43,5 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonProperty("projects")
     private List<Project> projects = new ArrayList<>();
-
-    public void setBirth(LocalDate birthDate) {
-        this.birthDate = birthDate;
-    }
-
-    public void setTime(LocalTime birthTime) {
-        this.birthTime = birthTime;
-    }
-
-    public void setGender(boolean gender) {
-        this.gender = gender;
-    }
-    public Integer getUserId() {
-        return this.userId;
-    }
-
-    public LocalDate getBirthDate() {
-        return this.birthDate;
-    }
-
-    public LocalTime getBirthTime() {
-        return this.birthTime;
-    }
-
-    public Boolean getGender() {
-        return this.gender;
-    }
-
-    public List<Project> getProjects() {
-        return this.projects;
-    }
 
 }

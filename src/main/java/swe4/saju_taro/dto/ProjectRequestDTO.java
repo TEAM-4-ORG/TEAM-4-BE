@@ -14,5 +14,6 @@ public class ProjectRequestDTO {
         private Integer userId;
         private Type type;
         private String firstQuestion;
+
     }
 }
