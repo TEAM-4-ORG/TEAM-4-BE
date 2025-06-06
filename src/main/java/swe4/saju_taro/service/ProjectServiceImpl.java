@@ -57,7 +57,7 @@ public class ProjectServiceImpl implements ProjectService {
                 .build();
         consultationRepository.save(consultation);
 
-        return new ProjectResponseDTO.ProjectCreateDTO(aiTitle);
+        return new ProjectResponseDTO.ProjectCreateDTO(project.getProjectId(), aiTitle);
     }
 
     @Override
