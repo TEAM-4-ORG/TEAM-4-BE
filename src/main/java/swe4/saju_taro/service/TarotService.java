@@ -1,6 +1,5 @@
 package swe4.saju_taro.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -10,8 +9,8 @@ import swe4.saju_taro.common.GeneralException;
 import swe4.saju_taro.common.status.ErrorStatus;
 import swe4.saju_taro.domain.Consultation;
 import swe4.saju_taro.domain.Project;
-import swe4.saju_taro.dto.SajuRequestDTO;
-import swe4.saju_taro.dto.SajuResponseDTO;
+import swe4.saju_taro.dto.TarotRequestDTO;
+import swe4.saju_taro.dto.TarotResponseDTO;
 import swe4.saju_taro.repository.ConsultationRepository;
 import swe4.saju_taro.repository.ProjectRepository;
 
@@ -22,16 +21,16 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class SajuService {
+public class TarotService {
 
     private final ConsultationRepository consultationRepository;
     private final ProjectRepository projectRepository;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
-    final String aiUrl = "http://localhost:5000/api/saju/consult";
+    final String aiUrl = "http://localhost:5000/api/tarot/consult";
 
-    public SajuResponseDTO sajuConsult(SajuRequestDTO requestDTO) {
+    public TarotResponseDTO tarotConsult(TarotRequestDTO requestDTO) {
 
         try {
             HttpHeaders headers = new HttpHeaders();
@@ -40,8 +39,8 @@ public class SajuService {
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("user_id", requestDTO.getUserId());
             requestBody.put("project_id", requestDTO.getProjectId());
+            requestBody.put("cards", requestDTO.getCards());
             requestBody.put("question", requestDTO.getQuestion());
-            requestBody.put("sajuData", requestDTO.getSajuData());
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
 
@@ -73,7 +72,7 @@ public class SajuService {
 
             consultationRepository.save(consultation);
 
-            return new SajuResponseDTO(
+            return new TarotResponseDTO(
                     consultation.getConsultationId(),
                     consultation.getQuestion(),
                     consultation.getResult(),
