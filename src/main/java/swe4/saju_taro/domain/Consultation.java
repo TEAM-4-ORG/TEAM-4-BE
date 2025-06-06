@@ -28,10 +28,10 @@ public class Consultation {
     @JoinColumn(name = "project_id", nullable = false)
     private Project project;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String question;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String result;
 
     @CreatedDate
