@@ -50,12 +50,13 @@ public class ProjectServiceImpl implements ProjectService {
                 .build();
         projectRepository.save(project);
 
-        Consultation consultation = Consultation.builder()
-                .project(project)
-                .question(projectDTO.getFirstQuestion())
-                .result("")
-                .build();
-        consultationRepository.save(consultation);
+
+//        Consultation consultation = Consultation.builder()
+//                .project(project)
+//                .question(projectDTO.getFirstQuestion())
+//                .result("")
+//                .build();
+//        consultationRepository.save(consultation);
 
         return new ProjectResponseDTO.ProjectCreateDTO(project.getProjectId(), aiTitle);
     }
