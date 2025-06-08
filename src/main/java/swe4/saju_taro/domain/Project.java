@@ -54,9 +54,4 @@ public class Project {
     @Column(name = "tarot_cards")
     private String tarotCards;
 
-    @Lob
-    @Setter
-    @Column(name = "saju_data", columnDefinition = "TEXT")
-    private String sajuData;
-
 }

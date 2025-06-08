@@ -75,7 +75,6 @@ public class SajuService {
                     .build();
 
             project.setUpdatedAt(LocalDateTime.now());
-            project.setSajuData(requestDTO.getSajuData().toString());
 
             consultationRepository.save(consultation);
 
