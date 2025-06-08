@@ -46,7 +46,7 @@ public class UserService {
                 .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
 
         List<ProjectResponseDTO.ProjectUserLoadDTO> projects = user.getProjects().stream()
-                .sorted(Comparator.comparing(Project::getProjectId))
+                .sorted(Comparator.comparing(Project::getUpdatedAt).reversed())
                 .map(ProjectResponseDTO.ProjectUserLoadDTO::new)
                 .toList();
 
