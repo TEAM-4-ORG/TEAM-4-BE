@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import swe4.saju_taro.common.ApiResponse;
 import swe4.saju_taro.common.status.SuccessStatus;
 import swe4.saju_taro.dto.SajuRequestDTO;
+import swe4.saju_taro.dto.SajuSaveRequestDTO;
 import swe4.saju_taro.service.SajuService;
 
 
@@ -20,4 +21,9 @@ public class SajuController {
         return ApiResponse.onSuccess(SuccessStatus._OK, sajuService.sajuConsult(request));
     }
 
+    @PostMapping("/save")
+    public ApiResponse<?> sajuSave(@RequestBody SajuSaveRequestDTO request) {
+        sajuService.sajuSave(request);
+        return ApiResponse.onSuccess(SuccessStatus.SAJU_SAVED, null);
+    }
 }

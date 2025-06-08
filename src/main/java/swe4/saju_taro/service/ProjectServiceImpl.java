@@ -78,6 +78,7 @@ public class ProjectServiceImpl implements ProjectService {
                 user.getUserId(),
                 project.getTitle(),
                 project.getType().name(),
+                project.getTarotCards(),
                 consultations
         );
     }

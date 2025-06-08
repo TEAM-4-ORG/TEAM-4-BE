@@ -15,6 +15,5 @@ public class TarotRequestDTO {
     private Integer userId;
     @JsonProperty("project_id")
     private Integer projectId;
-    private List<String> cards;
     private String question;
 }

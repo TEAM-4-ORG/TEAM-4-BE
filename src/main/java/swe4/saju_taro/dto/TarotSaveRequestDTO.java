@@ -5,15 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Map;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SajuRequestDTO {
-    @JsonProperty("user_id")
-    private Integer userId;
+public class TarotSaveRequestDTO {
     @JsonProperty("project_id")
     private Integer projectId;
-    private String question;
+    private List<String> cards;
 }

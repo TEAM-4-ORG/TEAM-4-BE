@@ -10,10 +10,8 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SajuRequestDTO {
+public class SajuSaveRequestDTO {
     @JsonProperty("user_id")
     private Integer userId;
-    @JsonProperty("project_id")
-    private Integer projectId;
-    private String question;
+    private Map<String, Object> sajuData;
 }

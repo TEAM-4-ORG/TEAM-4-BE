@@ -10,10 +10,13 @@ import swe4.saju_taro.common.GeneralException;
 import swe4.saju_taro.common.status.ErrorStatus;
 import swe4.saju_taro.domain.Consultation;
 import swe4.saju_taro.domain.Project;
+import swe4.saju_taro.domain.User;
 import swe4.saju_taro.dto.SajuRequestDTO;
 import swe4.saju_taro.dto.SajuResponseDTO;
+import swe4.saju_taro.dto.SajuSaveRequestDTO;
 import swe4.saju_taro.repository.ConsultationRepository;
 import swe4.saju_taro.repository.ProjectRepository;
+import swe4.saju_taro.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -26,6 +29,7 @@ public class SajuService {
 
     private final ConsultationRepository consultationRepository;
     private final ProjectRepository projectRepository;
+    private final UserRepository userRepository;
 
     private final RestTemplate restTemplate = new RestTemplate();
 
@@ -34,19 +38,24 @@ public class SajuService {
     public SajuResponseDTO sajuConsult(SajuRequestDTO requestDTO) {
 
         if (requestDTO.getUserId() == null || requestDTO.getProjectId() == null ||
-                requestDTO.getQuestion() == null || requestDTO.getQuestion().trim().isEmpty() ||
-                requestDTO.getSajuData() == null) {
+                requestDTO.getQuestion() == null || requestDTO.getQuestion().trim().isEmpty()) {
             throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
         }
         try {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
+            User user = userRepository.findById(requestDTO.getUserId())
+                    .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            Object sajuDataObject = objectMapper.readValue(user.getSajuData(), Object.class);
+
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("user_id", requestDTO.getUserId());
             requestBody.put("project_id", requestDTO.getProjectId());
             requestBody.put("question", requestDTO.getQuestion());
-            requestBody.put("sajuData", requestDTO.getSajuData());
+            requestBody.put("sajuData", sajuDataObject);
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
 
@@ -86,6 +95,23 @@ public class SajuService {
             );
         } catch (Exception e) {
             throw new GeneralException(ErrorStatus.AI_RESPONSE_FAILED);
+        }
+    }
+
+    public void sajuSave(SajuSaveRequestDTO requestDTO) {
+        if (requestDTO.getUserId() == null || requestDTO.getSajuData() == null) {
+            throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
+        }
+
+        User user = userRepository.findById(requestDTO.getUserId())
+                .orElseThrow(() -> new GeneralException(ErrorStatus.USER_NOT_FOUND));
+
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(requestDTO.getSajuData());
+            user.setSajuData(json);
+        } catch (Exception e) {
+            throw new GeneralException(ErrorStatus._INTERNAL_SERVER_ERROR);
         }
     }
 }

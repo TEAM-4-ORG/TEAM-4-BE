@@ -23,6 +23,7 @@ public class ProjectResponseDTO {
         private Integer userId;
         private String title;
         private String type;
+        private String tarotCards;
         private List<ConsultationResponseDTO> consultations;
 
     }

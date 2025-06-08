@@ -46,4 +46,9 @@ public class User {
     @JsonProperty("projects")
     private List<Project> projects = new ArrayList<>();
 
+    @Lob
+    @Setter
+    @Column(name = "saju_data", columnDefinition = "TEXT")
+    private String sajuData;
+
 }
