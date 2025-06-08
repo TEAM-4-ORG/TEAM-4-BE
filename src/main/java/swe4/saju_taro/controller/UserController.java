@@ -7,6 +7,7 @@ import swe4.saju_taro.common.ApiResponse;
 import swe4.saju_taro.common.status.SuccessStatus;
 import swe4.saju_taro.domain.User;
 import swe4.saju_taro.dto.UserRequestDTO;
+import swe4.saju_taro.dto.UserResponseDTO;
 import swe4.saju_taro.service.UserService;
 
 
@@ -23,7 +24,7 @@ public class UserController {
     }
 
     @GetMapping("/info/{userId}")
-    public ResponseEntity<User> getUserInfo(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<UserResponseDTO.UserLoadDTO> getUserInfo(@PathVariable("userId") Integer userId) {
         return ResponseEntity.ok(userService.getUser(userId));
     }
 

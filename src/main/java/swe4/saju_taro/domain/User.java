@@ -5,12 +5,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.cglib.core.Local;
+import org.springframework.http.ResponseEntity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "user")
