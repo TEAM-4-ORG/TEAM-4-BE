@@ -19,7 +19,9 @@ public enum SuccessStatus implements BaseCode {
 
     // 프로젝트 관련 응답
     PROJECT_CREATED(HttpStatus.OK, "PROJECT200", "프로젝트 추가에 성공했습니다."),
-    PROJECT_DELETED(HttpStatus.OK, "PROJECT200", "프로젝트 삭제에 성공했습니다. ");
+    PROJECT_DELETED(HttpStatus.OK, "PROJECT200", "프로젝트 삭제에 성공했습니다. "),
+    SAJU_SAVED(HttpStatus.OK, "PROJECT200", "사주 정보 저장에 성공했습니다."),
+    TAROT_SAVED(HttpStatus.OK, "PROJECT200", "타로 카드 저장에 성공했습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
