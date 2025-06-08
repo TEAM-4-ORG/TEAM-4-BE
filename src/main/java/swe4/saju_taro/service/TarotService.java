@@ -75,6 +75,7 @@ public class TarotService {
                     .build();
 
             project.setUpdatedAt(LocalDateTime.now());
+            project.setTarotCards(requestDTO.getCards().toString());
 
             consultationRepository.save(consultation);
 

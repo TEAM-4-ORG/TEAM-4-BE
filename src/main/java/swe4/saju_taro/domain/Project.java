@@ -49,4 +49,14 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Consultation> consultations = new ArrayList<>();
 
+    @Lob
+    @Setter
+    @Column(name = "tarot_cards")
+    private String tarotCards;
+
+    @Lob
+    @Setter
+    @Column(name = "saju_data", columnDefinition = "TEXT")
+    private String sajuData;
+
 }
