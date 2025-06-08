@@ -16,5 +16,4 @@ public class SajuRequestDTO {
     @JsonProperty("project_id")
     private Integer projectId;
     private String question;
-    private Map<String, Object> sajuData;
 }
