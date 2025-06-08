@@ -11,10 +11,12 @@ import swe4.saju_taro.domain.Consultation;
 import swe4.saju_taro.domain.Project;
 import swe4.saju_taro.dto.TarotRequestDTO;
 import swe4.saju_taro.dto.TarotResponseDTO;
+import swe4.saju_taro.dto.TarotSaveRequestDTO;
 import swe4.saju_taro.repository.ConsultationRepository;
 import swe4.saju_taro.repository.ProjectRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +35,7 @@ public class TarotService {
     public TarotResponseDTO tarotConsult(TarotRequestDTO requestDTO) {
 
         if (requestDTO.getUserId() == null || requestDTO.getProjectId() == null ||
-                requestDTO.getQuestion() == null || requestDTO.getQuestion().trim().isEmpty() ||
-                requestDTO.getCards() == null) {
+                requestDTO.getQuestion() == null || requestDTO.getQuestion().trim().isEmpty()) {
             throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
         }
 
@@ -42,10 +43,13 @@ public class TarotService {
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
 
+            Project project = projectRepository.findById(requestDTO.getProjectId())
+                    .orElseThrow(() -> new GeneralException(ErrorStatus.PROJECT_NOT_FOUND));
+
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("user_id", requestDTO.getUserId());
             requestBody.put("project_id", requestDTO.getProjectId());
-            requestBody.put("cards", requestDTO.getCards());
+            requestBody.put("cards", project.getTarotCards() != null ? project.getTarotCards() : "아직 뽑은 카드 없음");
             requestBody.put("question", requestDTO.getQuestion());
 
             HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
@@ -65,9 +69,6 @@ public class TarotService {
             Map<String, Object> resultMap = (Map<String, Object>) body.get("result");
             String consultResult = (String) resultMap.get("result");
 
-            Project project = projectRepository.findById(requestDTO.getProjectId())
-                    .orElseThrow(() -> new GeneralException(ErrorStatus.PROJECT_NOT_FOUND));
-
             Consultation consultation = Consultation.builder()
                     .project(project)
                     .question(requestDTO.getQuestion())
@@ -75,7 +76,6 @@ public class TarotService {
                     .build();
 
             project.setUpdatedAt(LocalDateTime.now());
-            project.setTarotCards(requestDTO.getCards().toString());
 
             consultationRepository.save(consultation);
 
@@ -88,5 +88,16 @@ public class TarotService {
         } catch (Exception e) {
             throw new GeneralException(ErrorStatus.AI_RESPONSE_FAILED);
         }
+    }
+
+    public void tarotSave(TarotSaveRequestDTO requestDTO) {
+        if (requestDTO.getProjectId() == null || requestDTO.getCards() == null) {
+            throw new GeneralException(ErrorStatus.MISSING_REQUIRED_VALUE);
+        }
+
+        Project project = projectRepository.findById(requestDTO.getProjectId())
+                .orElseThrow(() -> new GeneralException(ErrorStatus.PROJECT_NOT_FOUND));
+
+        project.setTarotCards(requestDTO.getCards().toString());
     }
 }

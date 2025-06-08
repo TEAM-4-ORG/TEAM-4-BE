@@ -50,6 +50,7 @@ public class Project {
     private List<Consultation> consultations = new ArrayList<>();
 
     @Lob
+    @Getter
     @Setter
     @Column(name = "tarot_cards")
     private String tarotCards;
