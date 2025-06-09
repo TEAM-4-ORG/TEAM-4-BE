@@ -40,10 +40,7 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp(){
-        validUserDTO = new UserRequestDTO.UserDTO();
-        validUserDTO.setBirth("2000-01-01");
-        validUserDTO.setTime("12:00");
-        validUserDTO.setGender(true);
+        validUserDTO = new UserRequestDTO.UserDTO("2000-01-01", "12:00", true);
     }
 
     @Test
@@ -132,10 +129,7 @@ class UserServiceTest {
         User user = User.builder().userId(5).build();
         when(userRepository.findById(5)).thenReturn(Optional.of(user));
 
-        UserRequestDTO.UserDTO updateDTO = new UserRequestDTO.UserDTO();
-        updateDTO.setBirth("1990-10-10");
-        updateDTO.setTime("23:45");
-        updateDTO.setGender(true);
+        UserRequestDTO.UserDTO updateDTO = new UserRequestDTO.UserDTO("1990-10-10", "23:45", true);
 
         userService.updateUser(5, updateDTO);
 
