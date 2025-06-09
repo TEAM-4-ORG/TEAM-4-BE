@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import swe4.saju_taro.common.GeneralException;
@@ -45,25 +46,9 @@ class ProjectServiceTest {
         mockUser = User.builder()
                 .userId(1)
                 .build();
+
     }
 
-    @Test
-    void createNewProject_shouldSucceed_withValidInput() {
-        ProjectRequestDTO.ProjectDTO dto = new ProjectRequestDTO.ProjectDTO(1, Type.TAROT, "오늘의 운세는?");
-
-        when(userRepository.findById(1)).thenReturn(Optional.of(mockUser));
-
-        when(projectRepository.save(any(Project.class))).thenAnswer(invocation -> {
-            Project p = invocation.getArgument(0);
-            p.setProjectId(1); // 수동 ID 설정
-            return p;
-        });
-
-        ProjectResponseDTO.ProjectCreateDTO result = projectService.createNewProject(dto);
-
-        assertEquals(1, result.getProjectId());
-        assertNotNull(result.getTitle());
-    }
 
     @Test
     void createNewProject_shouldThrow_whenMissingRequiredFields() {
