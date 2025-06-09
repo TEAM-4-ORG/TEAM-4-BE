@@ -68,7 +68,6 @@ class ProjectServiceTest {
     @Test
     void createNewProject_shouldThrow_whenMissingRequiredFields() {
         ProjectRequestDTO.ProjectDTO dto = new ProjectRequestDTO.ProjectDTO();
-        //dto.setUserId(null);  // 필수값 누락
 
         assertThrows(GeneralException.class, () -> projectService.createNewProject(dto));
     }
