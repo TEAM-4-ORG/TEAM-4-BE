@@ -3,6 +3,7 @@ package swe4.saju_taro.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import swe4.saju_taro.common.GeneralException;
 import swe4.saju_taro.common.status.ErrorStatus;
 
@@ -13,6 +14,7 @@ import java.time.format.DateTimeParseException;
 public class UserRequestDTO {
 
 
+    @Setter
     @Getter
     @NoArgsConstructor
     @AllArgsConstructor
