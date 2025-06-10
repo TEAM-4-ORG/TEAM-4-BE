@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "project")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -54,5 +55,4 @@ public class Project {
     @Setter
     @Column(name = "tarot_cards")
     private String tarotCards;
-
 }
