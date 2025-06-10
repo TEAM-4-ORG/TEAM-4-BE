@@ -44,12 +44,12 @@ class UserServiceTest {
     }
 
     @Test
-    void createUser_shouldSaveAndReturnId() {
+    void createUser_shouldSaveAndHaveRightValue() {
         ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
 
         UserResponseDTO.UserDTO result = userService.createUser(validUserDTO);
 
-        verify(userRepository).save(captor.capture());
+        verify(userRepository).save(captor.capture()); //userRepository.save(...)에 어떤 값이 들어갔는지 잡아냄
         User savedUser = captor.getValue();
         assertEquals(LocalDate.of(2000, 1, 1), savedUser.getBirthDate());
         assertEquals(LocalTime.of(12, 0), savedUser.getBirthTime());
@@ -59,8 +59,12 @@ class UserServiceTest {
 
     @Test
     void createUser_shouldThrowException_whenMissingValues() {
-        UserRequestDTO.UserDTO invalidDTO = new UserRequestDTO.UserDTO(); // 모두 null
-        assertThrows(GeneralException.class, () -> userService.createUser(invalidDTO));
+        UserRequestDTO.UserDTO invalidDTO1 = new UserRequestDTO.UserDTO();
+        UserRequestDTO.UserDTO invalidDTO2 = new UserRequestDTO.UserDTO(null, "12:00", true);
+        UserRequestDTO.UserDTO invalidDTO3 = new UserRequestDTO.UserDTO("2000-01-01", null, true);
+        assertThrows(GeneralException.class, () -> userService.createUser(invalidDTO1));
+        assertThrows(GeneralException.class, () -> userService.createUser(invalidDTO2));
+        assertThrows(GeneralException.class, () -> userService.createUser(invalidDTO3));
     }
 
     @Test

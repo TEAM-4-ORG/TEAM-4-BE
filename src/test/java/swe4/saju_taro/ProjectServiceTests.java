@@ -3,6 +3,7 @@ package swe4.saju_taro;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class ProjectServiceTest {
@@ -46,7 +48,6 @@ class ProjectServiceTest {
         mockUser = User.builder()
                 .userId(1)
                 .build();
-
     }
 
 
@@ -99,7 +100,6 @@ class ProjectServiceTest {
     @Test
     void deleteProject_shouldThrow_whenProjectNotFound() {
         when(projectRepository.findById(77)).thenReturn(Optional.empty());
-
         assertThrows(GeneralException.class, () -> projectService.deleteProject(77));
     }
 }

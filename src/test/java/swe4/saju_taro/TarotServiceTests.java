@@ -36,7 +36,7 @@ class TarotServiceTest {
     @Mock
     private ProjectRepository projectRepository;
 
-    @Spy
+    @Mock
     private RestTemplate restTemplate;
 
     private final ObjectMapper objectMapper = new ObjectMapper();

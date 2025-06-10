@@ -40,7 +40,7 @@ class SajuServiceTest {
     @Mock
     private UserRepository userRepository;
 
-    @Spy
+    @Mock
     private RestTemplate restTemplate;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -59,7 +59,6 @@ class SajuServiceTest {
                 .gender(true)
                 .sajuData(objectMapper.writeValueAsString(Map.of("birth", "1999-01-01")))
                 .build();
-
 
         mockProject = Project.builder()
                 .projectId(1)
@@ -101,6 +100,7 @@ class SajuServiceTest {
                 "isSuccess", true,
                 "result", mockResult
         );
+
         ResponseEntity<Map> mockEntity = new ResponseEntity<>(mockResponse, HttpStatus.OK);
         doReturn(mockEntity).when(restTemplate).exchange(
                 eq("http://localhost:5000/api/saju/consult"),
@@ -125,7 +125,6 @@ class SajuServiceTest {
         assertThat(result.getResult()).isEqualTo("길합니다");
     }
 
-
     @Test
     void sajuConsult_shouldThrowException_whenMissingValues() {
         // given
@@ -139,7 +138,6 @@ class SajuServiceTest {
         assertEquals("COMMON400", ex.getErrorReasonHttpStatus().getCode());
         assertEquals("입력되지 않은 필수값이 있습니다.", ex.getErrorReasonHttpStatus().getMessage());
     }
-
 
     @Test
     void sajuSave_shouldUpdateSajuData_whenValidInput() throws Exception {
@@ -156,7 +154,6 @@ class SajuServiceTest {
         verify(userRepository).findById(1);
         assertEquals(objectMapper.writeValueAsString(sajuData), mockUser.getSajuData());
     }
-
 
     @Test
     void sajuSave_shouldThrowException_whenMissingValues() {
